@@ -180,7 +180,7 @@ export const Patch = (
  */
 export const Delete = (
   path: string,
-  middleware: ExpressMiddleware[],
+  ...middleware: ExpressMiddleware[]
 ): MethodDecorator => {
   return mapping('delete', path, middleware);
 };

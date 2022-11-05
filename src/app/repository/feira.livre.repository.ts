@@ -3,6 +3,7 @@ import { Repository} from "typeorm";
 import { FeiraLivre } from "@/entities/feira.livre";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import { PageableRequest } from "@/dto/request/page.base.request";
+import { assignWith } from "lodash";
 
 @Service()
 export class FeiraLivreRepository {
@@ -28,5 +29,13 @@ export class FeiraLivreRepository {
 
     public async save(feiraLivre: FeiraLivre) {
         return await this.repository.save(feiraLivre)
+    }
+
+    public async remove(feiraLivre: FeiraLivre) {
+        return await this.repository.softRemove(feiraLivre);
+    }
+
+    public async restore(id: number) {
+        return await this.repository.restore(id)
     }
 }

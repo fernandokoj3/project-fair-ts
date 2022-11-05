@@ -99,6 +99,11 @@ export class FeirasLivres20141666455917179 implements MigrationInterface {
                     name: 'referencia',
                     type: 'text',
                     isNullable: true,
+                },
+                {
+                    name: 'deleted_at',
+                    type: 'timestamp',
+                    isNullable: true,
                 }
             ]
 

@@ -27,7 +27,7 @@ export abstract class PageBaseRequest {
     @IsOptional()
     @IsInt()
     @Max(100)
-    @Min(1)
+    @Min(10)
     limit: number = PAGINATION.MAX_LIMIT_SIZE
 
     @Type(() => Number)

@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 
 export function exceptionHandlerMiddleware(
     error: BaseError | Error,
-    req: Request,
+    _: Request,
     res: Response,
     next: NextFunction,
   ) {

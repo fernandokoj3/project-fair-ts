@@ -1,7 +1,7 @@
+import { IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsString, Matches, Max, Min, NotEquals } from "class-validator";
 import { IsBigInt, IsRegionNumber } from "@/models/custom.validation";
-import { Region } from "@/models/region";
 import { Expose } from "class-transformer"
-import { IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsString, Matches, Max, Min, NotEquals, ValidateIf } from "class-validator";
+import { Region } from "@/models/region";
 import { PageBaseRequest, Sortable } from "./page.base.request";
 
 export class FeiraLivreCreateRequest {
@@ -17,12 +17,12 @@ export class FeiraLivreCreateRequest {
     @Expose({ name: "setor_censitario"})
     @IsNotEmpty()
     @IsBigInt()
-    setorCensitario: string
+    setorCensitario: BigInt
 
     @IsNotEmpty()
     @IsBigInt()
     @Expose({ name: "area_de_ponderacao"})
-    areaDePonderacao: string
+    areaDePonderacao: BigInt
 
     @NotEquals(null)
     @IsInt()
@@ -57,7 +57,7 @@ export class FeiraLivreCreateRequest {
     regiao8: string
 
     @IsNotEmpty()
-    @Expose({ name: "name_feira"})
+    @Expose({ name: "nome_feira"})
     nomeFeira: string
 
     @NotEquals(null)
@@ -106,18 +106,18 @@ export class FeiraLivreListRequest extends PageBaseRequest implements Sortable {
     @IsOptional()
     @IsBigInt()
     @Expose()
-    latitude: string
+    latitude: BigInt
 
     @IsOptional()
     @Expose({ name: "setor_censitario"})
     @IsBigInt()
     @Expose()
-    setorCensitario: string
+    setorCensitario: BigInt
 
     @IsOptional()
     @IsBigInt()
     @Expose({ name: "area_de_ponderacao"})
-    areaDePonderacao: string
+    areaDePonderacao: BigInt
 
     @IsOptional()
     @IsInt()
@@ -156,7 +156,7 @@ export class FeiraLivreListRequest extends PageBaseRequest implements Sortable {
 
     @IsOptional()
     @IsNotEmpty()
-    @Expose({ name: "name_feira"})
+    @Expose({ name: "nome_feira"})
     nomeFeira: string
 
     @IsOptional()
@@ -208,18 +208,18 @@ export class FeiraLivreMergeRequest {
     @IsOptional()
     @IsBigInt()
     @Expose()
-    latitude: string
+    latitude: BigInt
 
     @IsOptional()
     @Expose({ name: "setor_censitario"})
     @IsBigInt()
     @Expose()
-    setorCensitario: string
+    setorCensitario: BigInt
 
     @IsOptional()
     @IsBigInt()
     @Expose({ name: "area_de_ponderacao"})
-    areaDePonderacao: string
+    areaDePonderacao: BigInt
 
     @IsOptional()
     @IsInt()
@@ -260,7 +260,7 @@ export class FeiraLivreMergeRequest {
 
     @IsOptional()
     @IsNotEmpty()
-    @Expose({ name: "name_feira"})
+    @Expose({ name: "nome_feira"})
     nomeFeira: string
 
     @IsOptional()

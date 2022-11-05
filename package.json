@@ -7,7 +7,7 @@
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
     "start": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/handler.ts",
     "start:local": "set ENVIRONMENT=local&& ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/handler.ts",
-    "seed": "set ENVIRONMENT=local&& ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed --dataSource ./src/app/database/data-source.ts",
+    "seed:local": "set ENVIRONMENT=local&& ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed --dataSource ./src/app/database/data-source.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir .build --copy-files",
     "prepare": "husky install",
     "test": "jest",

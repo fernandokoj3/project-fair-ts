@@ -18,3 +18,4 @@ export class SchemaValidationError {
 
 export class CrudException extends BaseError {}
 export class NotFoundException extends BaseError {}
+export class BadRequestException extends BaseError {}

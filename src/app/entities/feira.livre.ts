@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'feira_livre', schema: 'feiras' })
 export class FeiraLivre {
@@ -56,5 +56,8 @@ export class FeiraLivre {
 
     @Column({ name: 'referencia'})
     referencia: string
+
+    @DeleteDateColumn({ name: "deleted_at" })
+    deletedAt: Date
 
 }
