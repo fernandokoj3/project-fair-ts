@@ -1,0 +1,1113 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Swagger of records and manipulation of fair coordinates",
+    "version": "1.0",
+    "summary": "API to manipulate / register coordinates from Fair",
+    "description": "Fair project swagger",
+    "contact": {
+      "name": "Luis Fernando",
+      "email": "fernandokoj3@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "paths": {
+    "/": {
+      "parameters": [],
+      "get": {
+        "summary": "List fairs",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "meta": {
+                        "order_by": "bairro ASC",
+                        "page": 1,
+                        "limit": 10,
+                        "total_items": 881,
+                        "total_pages": 89,
+                        "total_items_page": 10,
+                        "has_previous_page": false,
+                        "has_next_page": true
+                      },
+                      "content": [
+                        {
+                          "id": 697,
+                          "longitude": "-46419040",
+                          "latitude": "-23546247",
+                          "setor_censitario": "355030831000083",
+                          "area_de_ponderacao": "3550308005265",
+                          "cod_distrito": 31,
+                          "distrito": "GUAIANASES",
+                          "cod_subprefeitura": 28,
+                          "sub_prefeitura": "GUAIANASES",
+                          "regiao5": "Leste",
+                          "regiao8": "Leste 2",
+                          "nome_feira": "VILA PRINCESA ISABEL",
+                          "registro": "3146-1",
+                          "logradouro": "RUA COMTE CARLOS RHUL",
+                          "numero": null,
+                          "bairro": "",
+                          "referencia": "VL PRINCESA ISABEL"
+                        }
+                      ]
+                    }
+                  },
+                  "properties": {
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "order_by": {
+                          "type": "string"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "total_items": {
+                          "type": "integer"
+                        },
+                        "total_pages": {
+                          "type": "integer"
+                        },
+                        "total_items_page": {
+                          "type": "integer"
+                        },
+                        "has_previous_page": {
+                          "type": "boolean"
+                        },
+                        "has_next_page": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "longitude": {
+                            "type": "string"
+                          },
+                          "latitude": {
+                            "type": "string"
+                          },
+                          "setor_censitario": {
+                            "type": "string"
+                          },
+                          "area_de_ponderacao": {
+                            "type": "string"
+                          },
+                          "cod_distrito": {
+                            "type": "integer"
+                          },
+                          "distrito": {
+                            "type": "string"
+                          },
+                          "cod_subprefeitura": {
+                            "type": "integer"
+                          },
+                          "sub_prefeitura": {
+                            "type": "string"
+                          },
+                          "regiao5": {
+                            "type": "string"
+                          },
+                          "regiao8": {
+                            "type": "string"
+                          },
+                          "nome_feira": {
+                            "type": "string"
+                          },
+                          "registro": {
+                            "type": "string"
+                          },
+                          "logradouro": {
+                            "type": "string"
+                          },
+                          "numero": {
+                            "type": "null"
+                          },
+                          "bairro": {
+                            "type": "string"
+                          },
+                          "referencia": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "List example": {
+                    "value": {
+                      "meta": {
+                        "order_by": "string",
+                        "page": 0,
+                        "limit": 0,
+                        "total_items": 0,
+                        "total_pages": 0,
+                        "total_items_page": 0,
+                        "has_previous_page": true,
+                        "has_next_page": true
+                      },
+                      "content": [
+                        {
+                          "id": 0,
+                          "longitude": "string",
+                          "latitude": "string",
+                          "setor_censitario": "string",
+                          "area_de_ponderacao": "string",
+                          "cod_distrito": 0,
+                          "distrito": "string",
+                          "cod_subprefeitura": 0,
+                          "sub_prefeitura": "string",
+                          "regiao5": "string",
+                          "regiao8": "string",
+                          "nome_feira": "string",
+                          "registro": "string",
+                          "logradouro": "string",
+                          "numero": null,
+                          "bairro": "string",
+                          "referencia": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {}
+              }
+            }
+          },
+          "500": {
+            "description": "Generic failure",
+            "headers": {}
+          }
+        },
+        "operationId": "list-fair-region",
+        "description": "List all fairs from database",
+        "x-internal": false,
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "ID",
+              "enum": [
+                "id",
+                "logradouro",
+                "bairro"
+              ]
+            },
+            "in": "query",
+            "name": "order",
+            "description": "column ordering"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "DESC",
+                "ASC",
+                "asc",
+                "desc"
+              ],
+              "example": "ASC"
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "sort direction"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "page",
+            "description": "index page to retrieve data"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "minimum": 10,
+              "maximum": 100
+            },
+            "in": "query",
+            "name": "limit",
+            "description": "limit to retrieve data"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "longitude",
+            "description": "longitude coordinates"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "setor_censitario",
+            "description": "territorial unit established for cadastral control purposes"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "area_de_ponderacao",
+            "description": "geographic unit, formed by a grouping of \"setor_censitario\""
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "cod_distrito",
+            "description": "district code"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "distrito",
+            "description": "district"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "cod_subprefeitura",
+            "description": "sub town hall code"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "subprefeitura",
+            "description": "sub town hall  name"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "lest",
+                "norte",
+                "sul",
+                "centro",
+                "oeste"
+              ]
+            },
+            "in": "query",
+            "name": "regiao5",
+            "description": "region "
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "lest",
+                "oeste",
+                "norte",
+                "sul",
+                "centro"
+              ]
+            },
+            "in": "query",
+            "name": "regiao8",
+            "description": "region with code"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nome_feira",
+            "description": "fair name"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "registro",
+            "description": "register"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "dig_registro",
+            "description": "register code"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "logradouro",
+            "description": "address"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "numero",
+            "description": "number of the fair"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "bairro",
+            "description": "neighborhood"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "referencia",
+            "description": "reference"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "latitude",
+            "description": "latitude coordinates"
+          }
+        ]
+      },
+      "post": {
+        "summary": "Creates a new fair",
+        "operationId": "post-fair-region",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "headers": {
+              "content-type": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "application/json"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "longitude": {
+                      "type": "string"
+                    },
+                    "latitude": {
+                      "type": "integer"
+                    },
+                    "setor_censitario": {
+                      "type": "integer"
+                    },
+                    "area_de_ponderacao": {
+                      "type": "integer"
+                    },
+                    "cod_distrito": {
+                      "type": "integer"
+                    },
+                    "distrito": {
+                      "type": "string"
+                    },
+                    "cod_subprefeitura": {
+                      "type": "integer"
+                    },
+                    "sub_prefeitura": {
+                      "type": "string"
+                    },
+                    "regiao5": {
+                      "type": "string"
+                    },
+                    "regiao8": {
+                      "type": "string"
+                    },
+                    "nome_feira": {
+                      "type": "string"
+                    },
+                    "registro": {
+                      "type": "string"
+                    },
+                    "logradouro": {
+                      "type": "string"
+                    },
+                    "numero": {
+                      "type": "integer"
+                    },
+                    "bairro": {
+                      "type": "string"
+                    },
+                    "referencia": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "longitude": "41214142",
+                      "latitude": 1000,
+                      "setor_censitario": 1000,
+                      "area_de_ponderacao": 1000,
+                      "cod_distrito": 1000,
+                      "distrito": "Test",
+                      "cod_subprefeitura": 10,
+                      "sub_prefeitura": "Test Sub",
+                      "regiao5": "sul",
+                      "regiao8": "sul 1",
+                      "nome_feira": "Fair test",
+                      "registro": "1000-0",
+                      "logradouro": "Test",
+                      "numero": 10,
+                      "bairro": "Test",
+                      "referencia": "Test",
+                      "id": 1764
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Generic failure",
+            "headers": {
+              "content-type": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "application/json"
+              }
+            }
+          }
+        },
+        "description": "Creates a new fair region and coordinates",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "content-type",
+            "description": "application/json"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "longitude": "41214142",
+                    "latitude": 1000,
+                    "setor_censitario": 1000,
+                    "area_de_ponderacao": 1000,
+                    "cod_distrito": 1000,
+                    "distrito": "Test",
+                    "cod_subprefeitura": 10,
+                    "subprefeitura": "Test Sub",
+                    "regiao5": "sul",
+                    "regiao8": "sul 1",
+                    "name_feira": "Fair test",
+                    "registro": 1000,
+                    "dig_registro": 0,
+                    "logradouro": "Test",
+                    "numero": 10,
+                    "bairro": "Test",
+                    "referencia": "Test"
+                  }
+                },
+                "properties": {
+                  "longitude": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "longitude coordinates"
+                  },
+                  "latitude": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "latitude coordinates"
+                  },
+                  "setor_censitario": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "territorial unit established for cadastral control purposes"
+                  },
+                  "area_de_ponderacao": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "geographic unit, formed by a grouping of \"setor_censitario\""
+                  },
+                  "cod_distrito": {
+                    "type": "integer",
+                    "description": "district code"
+                  },
+                  "distrito": {
+                    "type": "string",
+                    "description": "district"
+                  },
+                  "cod_subprefeitura": {
+                    "type": "integer",
+                    "description": "sub town hall code"
+                  },
+                  "subprefeitura": {
+                    "type": "string",
+                    "description": "sub town hall name"
+                  },
+                  "regiao5": {
+                    "type": "string",
+                    "description": "region"
+                  },
+                  "regiao8": {
+                    "type": "string",
+                    "description": "region with code"
+                  },
+                  "nome_feira": {
+                    "type": "string",
+                    "description": "fair name"
+                  },
+                  "registro": {
+                    "type": "integer",
+                    "description": "number"
+                  },
+                  "dig_registro": {
+                    "type": "integer",
+                    "description": "register code"
+                  },
+                  "logradouro": {
+                    "type": "string",
+                    "description": "address"
+                  },
+                  "numero": {
+                    "type": "integer",
+                    "description": "number of the fair"
+                  },
+                  "bairro": {
+                    "type": "string",
+                    "description": "neighborhood"
+                  },
+                  "referencia": {
+                    "type": "string",
+                    "description": "reference"
+                  }
+                },
+                "required": [
+                  "longitude",
+                  "latitude",
+                  "setor_censitario",
+                  "area_de_ponderacao",
+                  "cod_distrito",
+                  "distrito",
+                  "cod_subprefeitura",
+                  "subprefeitura",
+                  "regiao5",
+                  "regiao8",
+                  "nome_feira",
+                  "registro",
+                  "dig_registro",
+                  "logradouro",
+                  "bairro"
+                ]
+              }
+            }
+          },
+          "description": "Ok"
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "summary": "Get fair by id",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "longitude": {
+                      "type": "string"
+                    },
+                    "latitude": {
+                      "type": "string"
+                    },
+                    "setor_censitario": {
+                      "type": "string"
+                    },
+                    "area_de_ponderacao": {
+                      "type": "string"
+                    },
+                    "cod_distrito": {
+                      "type": "integer"
+                    },
+                    "distrito": {
+                      "type": "string"
+                    },
+                    "cod_subprefeitura": {
+                      "type": "integer"
+                    },
+                    "sub_prefeitura": {
+                      "type": "string"
+                    },
+                    "regiao5": {
+                      "type": "string"
+                    },
+                    "regiao8": {
+                      "type": "string"
+                    },
+                    "nome_feira": {
+                      "type": "string"
+                    },
+                    "registro": {
+                      "type": "string"
+                    },
+                    "logradouro": {
+                      "type": "string"
+                    },
+                    "numero": {
+                      "type": "integer"
+                    },
+                    "bairro": {
+                      "type": "string"
+                    },
+                    "referencia": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "id": 697,
+                      "longitude": "-46419040",
+                      "latitude": "-23546247",
+                      "setor_censitario": "355030831000083",
+                      "area_de_ponderacao": "3550308005265",
+                      "cod_distrito": 31,
+                      "distrito": "GUAIANASES",
+                      "cod_subprefeitura": 28,
+                      "sub_prefeitura": "GUAIANASES",
+                      "regiao5": "Leste",
+                      "regiao8": "Leste 2",
+                      "nome_feira": "VILA PRINCESA ISABEL",
+                      "registro": "3146-1",
+                      "logradouro": "RUA COMTE CARLOS RHUL",
+                      "numero": 1,
+                      "bairro": "",
+                      "referencia": "VL PRINCESA ISABEL"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "register {id} not found",
+            "headers": {
+              "content-type": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "application/json"
+              }
+            }
+          },
+          "500": {
+            "description": "Generic failure",
+            "headers": {
+              "content-type": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "application/json"
+              }
+            }
+          }
+        },
+        "operationId": "get-fair-region",
+        "description": "Retrieves one information for one fair",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "content-type",
+            "description": "application/json"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "fair's identifier "
+        }
+      ],
+      "patch": {
+        "summary": "Partial Update fair by id",
+        "operationId": "patch-fair-region",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "longitude": {
+                      "type": "string"
+                    },
+                    "latitude": {
+                      "type": "string"
+                    },
+                    "setor_censitario": {
+                      "type": "string"
+                    },
+                    "area_de_ponderacao": {
+                      "type": "string"
+                    },
+                    "cod_distrito": {
+                      "type": "integer"
+                    },
+                    "distrito": {
+                      "type": "string"
+                    },
+                    "cod_subprefeitura": {
+                      "type": "integer"
+                    },
+                    "sub_prefeitura": {
+                      "type": "string"
+                    },
+                    "regiao5": {
+                      "type": "string"
+                    },
+                    "regiao8": {
+                      "type": "string"
+                    },
+                    "nome_feira": {
+                      "type": "string"
+                    },
+                    "registro": {
+                      "type": "string"
+                    },
+                    "logradouro": {
+                      "type": "string"
+                    },
+                    "numero": {
+                      "type": "integer"
+                    },
+                    "bairro": {
+                      "type": "string"
+                    },
+                    "referencia": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "id": 697,
+                      "longitude": "-46419040",
+                      "latitude": "-23546247",
+                      "setor_censitario": "355030831000083",
+                      "area_de_ponderacao": "3550308005265",
+                      "cod_distrito": 31,
+                      "distrito": "GUAIANASES",
+                      "cod_subprefeitura": 28,
+                      "sub_prefeitura": "GUAIANASES",
+                      "regiao5": "Leste",
+                      "regiao8": "Leste 2",
+                      "nome_feira": "VILA PRINCESA ISABEL",
+                      "registro": "3146-1",
+                      "logradouro": "RUA COMTE CARLOS RHUL",
+                      "numero": 1,
+                      "bairro": "",
+                      "referencia": "VL PRINCESA ISABEL"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Partial Update from current fair",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "content-type",
+            "description": "application/json"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "longitude": "41214142",
+                    "latitude": 1000,
+                    "setor_censitario": 1000,
+                    "area_de_ponderacao": 1000,
+                    "cod_distrito": 1000,
+                    "distrito": "Test",
+                    "cod_subprefeitura": 10,
+                    "subprefeitura": "Test Sub",
+                    "regiao5": "sul",
+                    "regiao8": "sul 1",
+                    "name_feira": "Fair test",
+                    "registro": 1000,
+                    "dig_registro": 0,
+                    "logradouro": "Test",
+                    "numero": 10,
+                    "bairro": "Test",
+                    "referencia": "Test"
+                  }
+                },
+                "properties": {
+                  "longitude": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "longitude coordinates"
+                  },
+                  "latitude": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "latitude coordinates"
+                  },
+                  "setor_censitario": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "territorial unit established for cadastral control purposes"
+                  },
+                  "area_de_ponderacao": {
+                    "type": [
+                      "string",
+                      "number",
+                      "integer"
+                    ],
+                    "pattern": "^(-)?[0-9]{1,}+",
+                    "description": "geographic unit, formed by a grouping of \"setor_censitario\""
+                  },
+                  "cod_distrito": {
+                    "type": "integer",
+                    "description": "district code"
+                  },
+                  "distrito": {
+                    "type": "string",
+                    "description": "district"
+                  },
+                  "cod_subprefeitura": {
+                    "type": "integer",
+                    "description": "sub town hall code"
+                  },
+                  "subprefeitura": {
+                    "type": "string",
+                    "description": "sub town hall name"
+                  },
+                  "regiao5": {
+                    "type": "string",
+                    "description": "region"
+                  },
+                  "regiao8": {
+                    "type": "string",
+                    "description": "region with code"
+                  },
+                  "nome_feira": {
+                    "type": "string",
+                    "description": "fair name"
+                  },
+                  "registro": {
+                    "type": "integer",
+                    "description": "number"
+                  },
+                  "dig_registro": {
+                    "type": "integer",
+                    "description": "register code"
+                  },
+                  "logradouro": {
+                    "type": "string",
+                    "description": "address"
+                  },
+                  "numero": {
+                    "type": "integer",
+                    "description": "number of the fair"
+                  },
+                  "bairro": {
+                    "type": "string",
+                    "description": "neighborhood"
+                  },
+                  "referencia": {
+                    "type": "string",
+                    "description": "reference"
+                  }
+                },
+                "required": [
+                  "longitude",
+                  "latitude",
+                  "setor_censitario",
+                  "area_de_ponderacao",
+                  "cod_distrito",
+                  "distrito",
+                  "cod_subprefeitura",
+                  "subprefeitura",
+                  "regiao5",
+                  "regiao8",
+                  "nome_feira",
+                  "registro",
+                  "dig_registro",
+                  "logradouro",
+                  "bairro"
+                ]
+              }
+            }
+          },
+          "description": "Ok"
+        }
+      },
+      "delete": {
+        "summary": "Soft delete fair by id",
+        "operationId": "delete-fair-region",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "message": "Fair removed with successful"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Generic failure"
+          }
+        },
+        "description": "Desactivated Fair from database"
+      },
+      "put": {
+        "summary": "Update fair by id",
+        "operationId": "put-fair-region",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "message": "Fair restore with successful"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "description": "Restore Fair on database"
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  }
+}

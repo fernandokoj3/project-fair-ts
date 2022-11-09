@@ -1,91 +1,107 @@
-import { IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsString, Matches, Max, Min, NotEquals } from "class-validator";
-import { IsBigInt, IsRegionNumber } from "@/models/custom.validation";
-import { Expose } from "class-transformer"
+import { IsDefined, IsEnum, IsInt, IsNumberString, IsOptional, IsString, Matches, Max, Min } from "class-validator";
+import { IsBigInt, IsRegionNumber, IsValidNumber } from "@/middlewares/custom.validation";
+import { Expose, Transform } from "class-transformer"
 import { Region } from "@/models/region";
 import { PageBaseRequest, Sortable } from "./page.base.request";
+import { fixProperty } from "@/utils/objectUtils";
+
+
 
 export class FeiraLivreCreateRequest {
     
-    @IsNotEmpty()
+    @IsDefined()
     @IsBigInt()
     longitude: BigInt;
 
-    @IsNotEmpty()
+    @IsDefined()
     @IsBigInt()
     latitude: BigInt
 
-    @Expose({ name: "setor_censitario"})
-    @IsNotEmpty()
+    @IsDefined()
     @IsBigInt()
+    @Expose({ name: "setor_censitario"})
+    @Transform((fixProperty))
     setorCensitario: BigInt
 
-    @IsNotEmpty()
+    @IsDefined()
     @IsBigInt()
     @Expose({ name: "area_de_ponderacao"})
+    @Transform((fixProperty))
     areaDePonderacao: BigInt
 
-    @NotEquals(null)
+    @IsDefined()
     @IsInt()
     @Min(1)
+    @Transform((fixProperty))
     @Expose({ name: "cod_distrito"})
     codDistrito: number
 
+    @IsDefined()
     @IsString()
-    @IsNotEmpty()
     distrito: string
 
-    @NotEquals(null)
+    @IsDefined()
     @IsInt()
     @Min(1)
+    @Transform((fixProperty))
     @Expose({ name: "cod_subprefeitura"})
     codSubprefeitura: number
 
+    @IsDefined()
     @IsString()
-    @IsNotEmpty()
     subprefeitura: string
 
+    @IsDefined()
     @IsString()
-    @IsNotEmpty()
     @Matches(`^${Object.values(Region).join('|')}$`, 'i', {
-        message: ({ value }) => 
-        `${value} is not a valid region on ${Object.values(Region).join('|')}`,
+        message: ({ value, property }) => {
+            return `${property} '${value}' is not a valid region on ${Object.values(Region).join('|')}`
+        }
     })
     regiao5: string
 
-    @IsNotEmpty()
+    @IsDefined()
+    @IsString()
     @IsRegionNumber()
     regiao8: string
 
-    @IsNotEmpty()
+    @IsDefined()
+    @IsString()
+    @Transform((fixProperty))
     @Expose({ name: "nome_feira"})
     nomeFeira: string
 
-    @NotEquals(null)
+    @IsDefined()
     @IsInt()
     @Min(1)
     @Max(9999)
     registro: number
 
+    @IsDefined()
+    @IsInt()
     @Max(9)
+    @Transform((fixProperty))
     @Expose({ name: "dig_registro"})
     digRegistro: number
 
+    @IsDefined()
     @IsString()
-    @IsNotEmpty()
     logradouro: string
 
+    @IsOptional()
     @IsInt()
     numero: number
 
-    @IsNotEmpty()
+    @IsDefined()
     @IsString()
     bairro: string
 
+    @IsOptional()
     @IsString()
     referencia: string
 }
 
-enum FeiraLivreListSort {
+export enum FeiraLivreListOrder {
     ID = 'id',
     ADDRESS = 'logradouro',
     DISTRICT = 'bairro'
@@ -95,67 +111,72 @@ export class FeiraLivreListRequest extends PageBaseRequest implements Sortable {
 
     @IsOptional()
     @IsString()
-    @IsEnum(FeiraLivreListSort)
-    order: string = FeiraLivreListSort.ID;
+    @IsEnum(FeiraLivreListOrder, {
+        message: ({ value, property }) => {
+            return `${property} '${value}' is not a valid order on ${Object.values(FeiraLivreListOrder).join('|')}`
+        }
+    })
+    order: string = FeiraLivreListOrder.ID;
 
     @IsOptional()
     @IsBigInt()
-    @Expose()
     longitude: BigInt;
 
     @IsOptional()
     @IsBigInt()
-    @Expose()
     latitude: BigInt
 
     @IsOptional()
-    @Expose({ name: "setor_censitario"})
     @IsBigInt()
-    @Expose()
+    @Expose({ name: "setor_censitario"})
+    @Transform((fixProperty))
     setorCensitario: BigInt
 
     @IsOptional()
     @IsBigInt()
     @Expose({ name: "area_de_ponderacao"})
+    @Transform((fixProperty))
     areaDePonderacao: BigInt
 
     @IsOptional()
     @IsInt()
     @Min(1)
+    @Transform((fixProperty))
     @Expose({ name: "cod_distrito"})
     codDistrito: number
 
     @IsOptional()
     @IsString()
-    @Expose()
     distrito: string
 
     @IsOptional()
     @IsInt()
     @Min(1)
+    @Transform((fixProperty))
     @Expose({ name: "cod_subprefeitura"})
     codSubprefeitura: number
 
     @IsOptional()
     @IsString()
-    @Expose()
     subprefeitura: string
 
     @IsOptional()
     @IsString()
     @Matches(`^${Object.values(Region).join('|')}$`, 'i', {
-        message: ({ value }) => 
-        `${value} is not a valid region on ${Object.values(Region).join('|')}`,
+        message: ({ value, property }) => {
+            return `${property} '${value}' is not a valid region on ${Object.values(Region).join('|')}`
+        }
     })
-    @Expose()
     regiao5: string
 
     @IsOptional()
+    @IsString()
     @IsRegionNumber()
     regiao8: string
 
     @IsOptional()
-    @IsNotEmpty()
+    @IsString()
+    @Transform((fixProperty))
     @Expose({ name: "nome_feira"})
     nomeFeira: string
 
@@ -163,103 +184,98 @@ export class FeiraLivreListRequest extends PageBaseRequest implements Sortable {
     @IsInt()
     @Min(1)
     @Max(9999)
-    @Expose()
     registro: number
 
     @IsOptional()
+    @IsInt()
     @Max(9)
+    @Transform((fixProperty))
     @Expose({ name: "dig_registro"})
     digRegistro: number
 
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
-    @Expose()
     logradouro: string
 
     @IsOptional()
     @IsInt()
-    @Expose()
     numero: number
 
     @IsOptional()
     @IsString()
-    @Expose()
     bairro: string
 
     @IsOptional()
     @IsString()
-    @Expose()
     referencia: string
 }
 
 export class FeiraRequestOneRequest {
-    @IsNumberString()
-    id: number
+    @IsValidNumber()
+    id: number | string
 }
 
 export class FeiraLivreMergeRequest {
-    
-    @IsOptional()
-    @IsBigInt()
-    @Expose()
-    longitude?: BigInt;
 
     @IsOptional()
     @IsBigInt()
-    @Expose()
+    longitude: BigInt;
+
+    @IsOptional()
+    @IsBigInt()
     latitude: BigInt
 
     @IsOptional()
-    @Expose({ name: "setor_censitario"})
     @IsBigInt()
-    @Expose()
+    @Expose({ name: "setor_censitario"})
+    @Transform((fixProperty))
     setorCensitario: BigInt
 
     @IsOptional()
     @IsBigInt()
     @Expose({ name: "area_de_ponderacao"})
+    @Transform((fixProperty))
     areaDePonderacao: BigInt
 
     @IsOptional()
     @IsInt()
     @Min(1)
+    @Transform((fixProperty))
     @Expose({ name: "cod_distrito"})
     codDistrito: number
 
     @IsOptional()
     @IsString()
-    @Expose()
     distrito: string
 
     @IsOptional()
     @IsInt()
     @Min(1)
+    @Transform((fixProperty))
     @Expose({ name: "cod_subprefeitura"})
     codSubprefeitura: number
 
     @IsOptional()
     @IsString()
-    @Expose()
     subprefeitura: string
 
     @IsOptional()
     @IsString()
     @Matches(`^${Object.values(Region).join('|')}$`, 'i', {
-        message: ({ value }) => 
-        `${value} is not a valid region on ${Object.values(Region).join('|')}`,
+        message: ({ value, property }) => {
+            return `${property} '${value}' is not a valid region on ${Object.values(Region).join('|')}`
+        }
     })
-    @IsNotEmpty()
-    @Expose()
     regiao5: string
 
     @IsOptional()
-    @IsNotEmpty()
+    @IsString()
     @IsRegionNumber()
     regiao8: string
 
     @IsOptional()
-    @IsNotEmpty()
+    @IsString()
+    @Transform((fixProperty))
     @Expose({ name: "nome_feira"})
     nomeFeira: string
 
@@ -267,34 +283,28 @@ export class FeiraLivreMergeRequest {
     @IsInt()
     @Min(1)
     @Max(9999)
-    @Expose()
     registro: number
 
     @IsOptional()
+    @IsInt()
     @Max(9)
+    @Transform((fixProperty))
     @Expose({ name: "dig_registro"})
     digRegistro: number
 
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
-    @Expose()
     logradouro: string
 
     @IsOptional()
     @IsInt()
-    @Expose()
     numero: number
 
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
-    @Expose()
     bairro: string
 
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
-    @Expose()
     referencia: string
 }

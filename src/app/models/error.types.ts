@@ -1,3 +1,5 @@
+import { set } from "lodash";
+
 export class BaseError extends Error {
     constructor(
         public readonly code: number,
@@ -19,3 +21,4 @@ export class SchemaValidationError {
 export class CrudException extends BaseError {}
 export class NotFoundException extends BaseError {}
 export class BadRequestException extends BaseError {}
+export class GenericException extends BaseError {}

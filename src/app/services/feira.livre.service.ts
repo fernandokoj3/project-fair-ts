@@ -4,7 +4,7 @@ import { FeiraLivreCreateRequest, FeiraLivreListRequest, FeiraLivreMergeRequest 
 import { FeiraLivre } from "@/entities/feira.livre";
 import { plainToClass, plainToInstance } from "class-transformer";
 import { log } from "@/utils/logUtils";
-import { BadRequestException, CrudException, NotFoundException } from "@/models/error.types";
+import { BadRequestException, CrudException, GenericException, NotFoundException } from "@/models/error.types";
 import { PageResponse, PageMetaResponse } from "@/dto/response/page.base.response";
 import { FeiraLivreResponse } from "@/dto/response/feira.livre.response";
 import { isNotValid } from "@/utils/objectUtils";
@@ -35,62 +35,37 @@ export class FeiraLivreService {
     }
 
     public async save(feiraLivreRequest: FeiraLivreCreateRequest) {
-        try {
-            let feira: FeiraLivre = plainToClass(FeiraLivre, feiraLivreRequest)
-            let result = await this.repository.save(feira);
-            return plainToInstance(FeiraLivreResponse, result);
-        } catch (error) {
-            log.error('Fail to save entity', error);
-            throw new CrudException(400, error.message);
-        }
+        let feira: FeiraLivre = plainToClass(FeiraLivre, feiraLivreRequest)
+        let result = await this.repository.save(feira);
+        return plainToInstance(FeiraLivreResponse, result);
     }
 
     public async merge(id: number, feiraLivreRequest: FeiraLivreMergeRequest) {
-        try {
-            if (isNotValid(feiraLivreRequest)) {
-                throw Error("The request object shouldn't be null as a whole")
-            }
-            let feira = plainToClass(FeiraLivre, { ...feiraLivreRequest, id })
-            await this.repository.save(feira);
-            let result = await this.repository.findOne(id);
-            return plainToInstance(FeiraLivreResponse, result);
-        } catch (error) {
-            log.error('Fail to merge entity', error);
-            throw new CrudException(400, error.message);
+        if (isNotValid(feiraLivreRequest)) {
+            throw new CrudException(400, "The request object shouldn't be null as a whole");
         }
+        let exists = await this.repository.findOne(id);
+        if (!exists) {
+            throw new NotFoundException(404, `Entity with id ${id} not found`);
+        }
+        let feira = plainToClass(FeiraLivre, { ...feiraLivreRequest, id })
+        let persisted = await this.repository.save(feira);
+        return plainToInstance(FeiraLivreResponse, { ...exists, ...persisted });
     }
 
     public async remove(id: number): Promise<void> {
-        try {
-           
-            let entity = await this.repository.findOne(id);
-            if (!entity) {
-                throw new NotFoundException(404, `Entity with id ${id} not found`);
-            }
-            await this.repository.remove(entity)
-
-        } catch (error) {
-            log.error('Fail to delete entity', error);
-            if (error instanceof NotFoundException) {
-                throw error
-            }
-            throw new CrudException(400, error.message);
+        let entity = await this.repository.findOne(id);
+        if (!entity) {
+            throw new NotFoundException(404, `Entity with id ${id} not found`);
         }
+        await this.repository.remove(entity)
     }
 
     public async restore(id: number): Promise<void> {
-        try {
-            let entity = await this.repository.findOne(id);
-            if (entity) {
-                throw new BadRequestException(400, `This entity with ${id} already been restored or not needed`);
-            }
-
-            await this.repository.restore(id)
-        } catch (error) {
-            if (error instanceof BadRequestException) {
-                throw error
-            }
-            throw new CrudException(400, error.message);
+        let entity = await this.repository.findOne(id);
+        if (entity) {
+            throw new BadRequestException(400, `This entity with ${id} already been restored or not needed`);
         }
+        await this.repository.restore(id)
     }
 }

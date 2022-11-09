@@ -8,18 +8,16 @@ export async function validateObject<T = any>(
     validationClass: new () => T,
     options?: any,
   ): Promise<{ error?: SchemaValidationError[]; data?: T }> {
-    // Transforms plain object into instance of dto class
-    obj = plainToClass(validationClass, obj);
+    // Transforms plain object into instance class
+    let $obj: any = plainToClass(validationClass, Object.assign({}, obj));
   
     // Check for validation errors
-    let errors = await validate(obj, validationClass, {
+    let errors = await validate($obj, validationClass, {
       ...options,
     });
   
     if (errors.length === 0) {
-      return {
-        data: obj,
-      };
+      return { data: $obj };
     }
   
     const classValidatorErrors: SchemaValidationError[] = [];

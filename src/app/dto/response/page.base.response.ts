@@ -35,8 +35,8 @@ export class PageMetaResponse {
         this.total_items = totalItems;
         this.total_pages = Math.ceil(this.total_items / this.limit);
         this.total_items_page = totalItemsPage
-        this.has_previous_page = this.page > 1;
-        this.has_next_page = this.page < this.total_pages;
+        this.has_previous_page =  this.total_items_page === 0 ? false : this.page > 1;
+        this.has_next_page = this.total_items_page === 0 ? false : this.page < this.total_pages;
     }
 
 }
