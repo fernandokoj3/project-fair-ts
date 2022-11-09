@@ -1,5 +1,6 @@
 import { BaseError } from "@/models/error.types";
 import { NextFunction, Request, Response } from "express";
+import { log } from "@/utils/logUtils";
 
 export function exceptionHandlerMiddleware(
     error: BaseError | Error,
@@ -7,9 +8,12 @@ export function exceptionHandlerMiddleware(
     res: Response,
     next: NextFunction,
   ) {
+
   if (error instanceof BaseError) {
+    log.error("Something wrong", "[CODE-400]", error)
     return res.status(error.code).json({ message: error.message });
   }
-
+  
+  log.error("something terrible", "[CODE-400]", error)
   return res.status(500).json({ message: "Generic failure" });
 }

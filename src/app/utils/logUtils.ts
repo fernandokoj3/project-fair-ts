@@ -17,15 +17,26 @@ configure({
                 separator: ',' 
             },
         },
+        file: { 
+            type: "file",
+            filename: "all-fair.log",
+            maxLogSize: 10485760,
+            backups: 3,
+            compress: true,
+            layout : { 
+                type: 'json', 
+                separator: ',' 
+            },
+        },
     },
     categories: { 
         default: { 
-            appenders: [ 'console' ], 
+            appenders: [ 'file' ], 
             level: 'info' } 
         }
 })
 
-export const log = getLogger('console');
+export const log = getLogger('file');
 
 const _info = log.info
 const _warn = log.warn
