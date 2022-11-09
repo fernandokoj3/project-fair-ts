@@ -72,13 +72,19 @@ npm run typeorm migration:run
 Third step, you must run command below to seed database
 
 ```bash
-npm run npm run
+npm run seed:local
 ```
 
 Last step, you can run the server with the following commands:
 
 ```bash
 npm run start:local
+```
+
+You may run test with the following commands:
+
+```bash
+npm run test
 ```
 
 The swagger will be avaliable at: http://localhost:3000/api-docs

@@ -14,6 +14,6 @@ export function exceptionHandlerMiddleware(
     return res.status(error.code).json({ message: error.message });
   }
   
-  log.error("something terrible", "[CODE-400]", error)
+  log.error("something terrible", "[CODE-500]", error)
   return res.status(500).json({ message: "Generic failure" });
 }
